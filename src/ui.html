@@ -1,0 +1,26 @@
+<style>
+  body { font-family: sans-serif; padding: 20px; background: #F9FAFB; color: #111827; }
+  .score-card { border-radius: 8px; border: 1px solid #E5E7EB; padding: 15px; margin-bottom: 10px; background: white; }
+  .btn { background: #0052FF; color: white; border: none; padding: 10px; width: 100%; border-radius: 6px; cursor: pointer; }
+</style>
+
+<h2>Fintech Auditor</h2>
+<button class="btn" id="analyze">Analyze Selected Frame</button>
+
+<div id="results">
+  <p>Select a frame and click analyze to generate an AI Opinion based on industry benchmarks.</p>
+</div>
+
+<script>
+  document.getElementById('analyze').onclick = () => {
+    parent.postMessage({ pluginMessage: { type: 'analyze-design' } }, '*');
+  }
+
+  window.onmessage = (event) => {
+    const { type, data } = event.data.pluginMessage;
+    if (type === 'design-data-ready') {
+      document.getElementById('results').innerHTML = `<div class="score-card">Processing data... sending to Gem.</div>`;
+      // Here you would trigger the fetch call to your backend/Gem API
+    }
+  };
+</script>
